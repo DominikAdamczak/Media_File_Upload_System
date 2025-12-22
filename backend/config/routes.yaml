@@ -1,0 +1,10 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+api_upload:
+    resource: ../src/Controller/UploadController.php
+    type: attribute
+    prefix: /api

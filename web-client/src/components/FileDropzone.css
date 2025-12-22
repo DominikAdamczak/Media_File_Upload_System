@@ -1,0 +1,111 @@
+.dropzone {
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f7fafc;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropzone:hover {
+  border-color: #4299e1;
+  background-color: #ebf8ff;
+}
+
+.dropzone--active {
+  border-color: #48bb78;
+  background-color: #f0fff4;
+  transform: scale(1.02);
+}
+
+.dropzone--reject {
+  border-color: #f56565;
+  background-color: #fff5f5;
+}
+
+.dropzone__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.dropzone__icon {
+  width: 64px;
+  height: 64px;
+  color: #a0aec0;
+  transition: color 0.3s ease;
+}
+
+.dropzone__icon--active {
+  color: #48bb78;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.dropzone__icon--error {
+  color: #f56565;
+}
+
+.dropzone__text {
+  font-size: 18px;
+  color: #2d3748;
+  margin: 0;
+}
+
+.dropzone__text--active {
+  color: #48bb78;
+  font-weight: 600;
+}
+
+.dropzone__text--error {
+  color: #f56565;
+  font-weight: 600;
+}
+
+.dropzone__text strong {
+  color: #4299e1;
+}
+
+.dropzone__hint {
+  font-size: 14px;
+  color: #718096;
+  margin: 0;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .dropzone {
+    padding: 30px 20px;
+    min-height: 150px;
+  }
+
+  .dropzone__icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .dropzone__text {
+    font-size: 16px;
+  }
+
+  .dropzone__hint {
+    font-size: 13px;
+  }
+}

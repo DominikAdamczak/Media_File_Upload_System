@@ -1,0 +1,47 @@
+parameters:
+    upload.chunk_size: '%env(int:UPLOAD_CHUNK_SIZE)%'
+    upload.max_file_size: '%env(int:UPLOAD_MAX_FILE_SIZE)%'
+    upload.max_files: '%env(int:UPLOAD_MAX_FILES)%'
+    upload.allowed_types: '%env(csv:UPLOAD_ALLOWED_TYPES)%'
+    upload.storage_path: '%env(resolve:UPLOAD_STORAGE_PATH)%'
+    upload.temp_path: '%env(resolve:UPLOAD_TEMP_PATH)%'
+    upload.chunk_timeout: '%env(int:UPLOAD_CHUNK_TIMEOUT)%'
+    upload.file_retention_days: '%env(int:UPLOAD_FILE_RETENTION_DAYS)%'
+    upload.max_parallel_uploads: '%env(int:UPLOAD_MAX_PARALLEL_UPLOADS)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\Service\FileValidationService:
+        arguments:
+            $allowedTypes: '%upload.allowed_types%'
+            $maxFileSize: '%upload.max_file_size%'
+            $maxFiles: '%upload.max_files%'
+
+    App\Service\ChunkHandlerService:
+        arguments:
+            $tempPath: '%upload.temp_path%'
+            $chunkSize: '%upload.chunk_size%'
+            $chunkTimeout: '%upload.chunk_timeout%'
+
+    App\Service\StorageService:
+        arguments:
+            $storagePath: '%upload.storage_path%'
+            $retentionDays: '%upload.file_retention_days%'
+
+    App\Service\UploadManagerService:
+        arguments:
+            $maxParallelUploads: '%upload.max_parallel_uploads%'
