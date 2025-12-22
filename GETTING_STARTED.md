@@ -133,19 +133,6 @@ UPLOAD_FILE_RETENTION_DAYS=30
 UPLOAD_MAX_PARALLEL_UPLOADS=3
 ```
 
-### Frontend Configuration
-
-Edit [`web-client/vite.config.ts`](web-client/vite.config.ts:6) for API proxy:
-
-```typescript
-proxy: {
-  '/api': {
-    target: 'http://localhost:8000',
-    changeOrigin: true,
-  },
-}
-```
-
 ## API Endpoints
 
 | Method | Endpoint | Description |
@@ -211,55 +198,6 @@ The web client uses **SparkMD5** library for proper MD5 calculation:
 The web client calculates MD5 using SparkMD5 to match the backend's PHP `md5_file()` verification. This was a critical fix - previously the client was falling back to SHA-256, causing "File integrity check failed" errors.
 
 **Implementation:** See [`web-client/src/services/uploadManager.ts`](web-client/src/services/uploadManager.ts:276)
-
-## Common Issues
-
-### File Integrity Check Failed
-
-**Error:** `Failed to finalize upload: File integrity check failed`
-
-**Cause:** MD5 hash mismatch between client and server
-
-**Solution:**
-- Ensure `spark-md5` is installed: `npm install spark-md5 @types/spark-md5`
-- The fix is already implemented in the latest version
-- Clear browser cache and restart the dev server
-
-### Port Already in Use
-
-**Backend:**
-```bash
-# Use different port
-php -S localhost:8080 -t public/
-```
-
-**Frontend:**
-```bash
-# Edit vite.config.ts to change port
-server: { port: 3001 }
-```
-
-### Permission Errors
-
-```bash
-# Fix backend permissions
-chmod -R 775 backend/var/
-chown -R $(whoami) backend/var/
-```
-
-### CORS Errors
-
-Update [`backend/.env`](backend/.env:29):
-```env
-CORS_ALLOW_ORIGIN=http://localhost:3000
-```
-
-### TypeScript Errors in Frontend
-
-```bash
-cd web-client
-npm install
-```
 
 ## Next Steps
 
@@ -378,9 +316,6 @@ npm run build
 
 # Lint code
 npm run lint
-
-# Update dependencies
-npm update
 ```
 
 ## Support
@@ -389,21 +324,6 @@ npm update
 - **API Reference**: [`docs/API_DOCUMENTATION.md`](docs/API_DOCUMENTATION.md)
 - **Deployment Guide**: [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)
 - **Issues**: Check backend/frontend logs
-
-## What's Next?
-
-Optional enhancements you can add:
-
-- [ ] React Native mobile client
-- [ ] User authentication & authorization
-- [ ] Upload progress persistence across sessions
-- [ ] Video thumbnail generation
-- [ ] Image preview & cropping
-- [ ] Cloud storage integration (S3, Google Cloud)
-- [ ] Virus scanning
-- [ ] Rate limiting
-- [ ] Admin dashboard
-- [ ] Analytics & reporting
 
 ## License
 
