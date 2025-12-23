@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         executionOrder="depends,defects"
+         beStrictAboutOutputDuringTests="true"
+         failOnRisky="true"
+         failOnWarning="true">
+    
+    <php>
+        <ini name="display_errors" value="1" />
+        <ini name="error_reporting" value="-1" />
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="KERNEL_CLASS" value="App\Kernel" force="true" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        
+        <!-- Environment variables for testing -->
+        <env name="UPLOAD_CHUNK_SIZE" value="1048576" />
+        <env name="UPLOAD_MAX_FILE_SIZE" value="524288000" />
+        <env name="UPLOAD_MAX_FILES" value="10" />
+        <env name="UPLOAD_ALLOWED_TYPES" value="image/jpeg,image/png,video/mp4" />
+        <env name="UPLOAD_STORAGE_PATH" value="../var/test_uploads" />
+        <env name="UPLOAD_TEMP_PATH" value="../var/test_temp_chunks" />
+        <env name="UPLOAD_CHUNK_TIMEOUT" value="1800" />
+        <env name="UPLOAD_FILE_RETENTION_DAYS" value="30" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+        
+        <testsuite name="Service Tests">
+            <directory>tests/Service</directory>
+        </testsuite>
+        
+        <testsuite name="Controller Tests">
+            <directory>tests/Controller</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory>src/Kernel.php</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="var/coverage/html"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false"/>
+        </report>
+    </coverage>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+    <extensions>
+    </extensions>
+</phpunit>

@@ -90,12 +90,32 @@ php bin/console app:cleanup-chunks
 php bin/console app:cleanup-files
 ```
 
+## Testing
+
+```bash
+# Install dependencies (includes PHPUnit)
+composer install
+
+# Run all tests
+composer test
+
+# Run tests with coverage report
+composer test:coverage
+
+# Run specific test file
+vendor/bin/phpunit tests/Service/FileValidationServiceTest.php
+vendor/bin/phpunit tests/Service/ChunkHandlerServiceTest.php
+vendor/bin/phpunit tests/Service/StorageServiceTest.php
+```
+
+**Test Coverage:**
+- [`FileValidationServiceTest`](tests/Service/FileValidationServiceTest.php) - 18 tests for file validation
+- [`ChunkHandlerServiceTest`](tests/Service/ChunkHandlerServiceTest.php) - 15 tests for chunk handling
+- [`StorageServiceTest`](tests/Service/StorageServiceTest.php) - 18 tests for storage operations
+
 ## Development
 
 ```bash
-# Run tests
-php bin/phpunit
-
 # Clear cache
 php bin/console cache:clear
 ```
